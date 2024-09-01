@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.14
+          version: docker24
       - run:
           name: Install dependencies
           command: echo "No need to install anything. \n Just build and push the Docker image."
@@ -18,8 +18,8 @@ jobs:
           command: |
             echo "Inside the Build and push Docker image steps"
             docker --version # print the version for logging
-            docker build -t skandaprasad98/node-sample .        
-            docker tag skandaprasad98/node-sample skandaprasad98/node-sample:1.0.0
+            docker build -t "$DOCKER_USERNAME"/node-sample .        
+            docker tag "$DOCKER_USERNAME"/node-sample "$DOCKER_USERNAME"/node-sample:1.0.0
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            docker push skandaprasad98/node-sample:1.0.0
+            docker push "$DOCKER_USERNAME"/node-sample:1.0.0
             echo "Please tell me this is done"
